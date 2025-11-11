@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Broma de Preguntas</title>
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        
+        .pregunta {
+            font-size: 1.5em;
+            color: #333;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+        
+        .botones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        #btnSi {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        #btnNo {
+            background: #f44336;
+            color: white;
+        }
+        
+        .final {
+            display: none;
+            font-size: 1.3em;
+            color: #667eea;
+            margin-top: 30px;
+        }
+        
+        .emoji {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤔 Test de Sinceridad</h1>
+        <div class="emoji" id="emoji">😏</div>
+        <div class="pregunta" id="pregunta"></div>
+        <div class="botones" id="botones">
+            <button id="btnSi" type="button">Sí</button>
+            <button id="btnNo" type="button">No</button>
+        </div>
+        <div class="final" id="final"></div>
+    </div>
+
+    <script>
+        const preguntas = [
+            "¿Eres llorón?",
+            "¿Eres cabro?",
+            "¿Te gusta el pene?",
+            "¿Eres un capibara?",
+            "¿Estas lleno de algodon?"
+        ];
+        
+        let indice = 0;
+        let intentosNo = 0;
+        
+        const preguntaEl = document.getElementById('pregunta');
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const finalEl = document.getElementById('final');
+        const botonesEl = document.getElementById('botones');
+        const emojiEl = document.getElementById('emoji');
+        
+        function mostrarPregunta() {
+            preguntaEl.textContent = preguntas[indice];
+            intentosNo = 0;
+        }
+        
+        function clickSi() {
+            indice++;
+            intentosNo = 0;
+            
+            if (indice < preguntas.length) {
+                mostrarPregunta();
+                emojiEl.textContent = '😏';
+            } else {
+                preguntaEl.textContent = '¡Sabía que dirías que sí a todo!';
+                emojiEl.textContent = '😂';
+                botonesEl.style.display = 'none';
+                finalEl.textContent = '¡Has aceptado todo! 🎉';
+                finalEl.style.display = 'block';
+            }
+        }
+        
+        function clickNo() {
+            intentosNo++;
+            emojiEl.textContent = '😠';
+            
+            if (intentosNo === 1) {
+                preguntaEl.textContent = '¿Estás seguro? ' + preguntas[indice];
+            } else if (intentosNo === 2) {
+                preguntaEl.textContent = '¡Vamos, admítelo! ' + preguntas[indice];
+            } else {
+                preguntaEl.textContent = '¡No puedes escapar! ' + preguntas[indice];
+            }
+        }
+        
+        // Usar onclick directo (más compatible)
+        btnSi.onclick = clickSi;
+        btnNo.onclick = clickNo;
+        
+        // Iniciar
+        mostrarPregunta();
+    </script>
+</body>
+</html>
